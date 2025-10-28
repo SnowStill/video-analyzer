@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const ffmpeg = require('fluent-ffmpeg');
 
+//define storage for the videos
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'src/vods/');
@@ -11,8 +13,8 @@ const storage = multer.diskStorage({
     }
 });
 
-
-const fileType = /mp4|mov|avi|mkv/;//only take video files
+//filter to only accept video files
+const fileType = /mp4|mov|avi|mkv/;
 const upload = multer({
     storage: storage, limits: { fileSize: 100 * 1024 * 1024 }, // limit to 100 MB
     fileFilter: function (req, file, cb) {
@@ -26,6 +28,7 @@ const upload = multer({
     }
 });
 
+// POST /grade/ - the endpoint to upload a video file
 router.post('/', upload.single('video'), (req, res) => {
     try {
         if (!req.file) {
