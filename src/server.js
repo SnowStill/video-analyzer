@@ -9,7 +9,7 @@ app.use(express.json());
 app.use('/grade', gradeRouter);
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Video Grader API running on localhost:${PORT}`);
 });
